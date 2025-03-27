@@ -1,10 +1,10 @@
-struct Vector2D<Type> {
+pub struct Vector2D<Type> {
     x: Type,
     y: Type, 
 }
 
-struct Vector3D<Type> {
+pub struct Vector3D<Type> {
     x: Type,
     y: Type, 
-    z: Type
+    z: Type,
 }

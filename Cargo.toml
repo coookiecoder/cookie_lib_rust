@@ -3,7 +3,4 @@ name = "cookie_lib_rust"
 version = "0.1.0"
 edition = "2024"
 
-[lib]
-path = "src/test.rs"
-
 [dependencies]

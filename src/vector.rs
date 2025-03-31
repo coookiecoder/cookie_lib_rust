@@ -57,13 +57,15 @@ impl<Type: Display> Display for Vector3D<Type> {
 
 impl<Type: Clone> Vector2D<Type> {
     pub fn new(x: Type, y: Type) -> Vector2D<Type> {
-        Vector2D { data: Matrix::from(vec![vec![x], vec![y]]) }
+        let buffer: Vec<Vec<Type>> = vec![vec![x], vec![y]];
+        
+        Vector2D { data: Matrix::from(&buffer) }
     }
-    
+
     pub fn get_x(&self) -> Type {
         self.data.get_data_item(0, 0)
     }
-    
+
     pub fn get_y(&self) -> Type {
         self.data.get_data_item(1, 0)
     }
@@ -71,17 +73,19 @@ impl<Type: Clone> Vector2D<Type> {
 
 impl<Type: Clone> Vector3D<Type> {
     pub fn new(x: Type, y: Type, z: Type) -> Vector3D<Type> {
-        Vector3D { data: Matrix::from(vec![vec![x], vec![y], vec![z]]) }
+        let buffer: Vec<Vec<Type>> = vec![vec![x], vec![y], vec![z]];
+        
+        Vector3D { data: Matrix::from(&buffer) }
     }
-    
+
     pub fn get_x(&self) -> Type {
         self.data.get_data_item(0, 0)
     }
-    
+
     pub fn get_y(&self) -> Type {
         self.data.get_data_item(1, 0)
     }
-    
+
     pub fn get_z(&self) -> Type {
         self.data.get_data_item(2, 0)
     }

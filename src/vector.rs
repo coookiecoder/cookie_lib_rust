@@ -1,10 +1,88 @@
+use crate::matrix::Matrix;
+
+use std::fmt::Display;
+use std::fmt::Debug;
+use std::fmt::Formatter;
+use std::fmt::Result;
+
+use std::ops::Deref;
+
 pub struct Vector2D<Type> {
-    x: Type,
-    y: Type, 
+    data: Matrix<Type>,
 }
 
 pub struct Vector3D<Type> {
-    x: Type,
-    y: Type, 
-    z: Type,
+    data: Matrix<Type>,
+}
+
+impl<Type> Deref for Vector2D<Type> {
+    type Target = Matrix<Type>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.data
+    }
+}
+
+impl<Type> Deref for Vector3D<Type> {
+    type Target = Matrix<Type>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.data
+    }
+}
+
+impl<Type: Debug> Debug for Vector2D<Type> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        self.data.fmt(f) // Delegate to Matrix's Debug implementation
+    }
+}
+
+impl<Type: Display> Display for Vector2D<Type> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        self.data.fmt(f) // Delegate to Matrix's Display implementation
+    }
+}
+
+impl<Type: Debug> Debug for Vector3D<Type> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        self.data.fmt(f) // Delegate to Matrix's Debug implementation
+    }
+}
+
+impl<Type: Display> Display for Vector3D<Type> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        self.data.fmt(f) // Delegate to Matrix's Display implementation
+    }
+}
+
+impl<Type: Clone> Vector2D<Type> {
+    pub fn new(x: Type, y: Type) -> Vector2D<Type> {
+        Vector2D { data: Matrix::from(vec![vec![x], vec![y]]) }
+    }
+    
+    pub fn get_x(&self) -> Type {
+        self.data.get_data_item(0, 0)
+    }
+    
+    pub fn get_y(&self) -> Type {
+        self.data.get_data_item(1, 0)
+    }
+}
+
+impl<Type: Clone> Vector3D<Type> {
+    pub fn new(x: Type, y: Type, z: Type) -> Vector3D<Type> {
+        Vector3D { data: Matrix::from(vec![vec![x], vec![y], vec![z]]) }
+    }
+    
+    pub fn get_x(&self) -> Type {
+        self.data.get_data_item(0, 0)
+    }
+    
+    pub fn get_y(&self) -> Type {
+        self.data.get_data_item(1, 0)
+    }
+    
+    pub fn get_z(&self) -> Type {
+        self.data.get_data_item(2, 0)
+    }
 }

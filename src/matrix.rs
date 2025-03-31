@@ -22,17 +22,36 @@ impl<Type> From<Vec<Vec<Type>>> for Matrix<Type> {
 
 impl<Type: fmt::Debug> fmt::Debug for Matrix<Type> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        writeln!(f, "Matrix ({}x{}):", self.row, self.col)?;
+        if self.col == 1 {
+            writeln!(f, "Vector ({:?}x{:?}):", self.row, self.col)?;
+        } else {
+            writeln!(f, "Matrix ({:?}x{:?}):", self.row, self.col)?;
+        }
+        
         for row in &self.data {
             writeln!(f, "{:?}", row)?;
         }
+        
         Ok(())
     }
 }
 
-impl <Type: fmt::Display + fmt::Debug> fmt::Display for Matrix<Type> {
+impl <Type: fmt::Display> fmt::Display for Matrix<Type> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{:?}", self)?;
+        if self.col == 1 {
+            writeln!(f, "Vector ({}x{}):", self.row, self.col)?;
+        } else {
+            writeln!(f, "Matrix ({}x{}):", self.row, self.col)?;
+        }
+        
+        for row in &self.data {
+            write!(f, "[", )?;
+            for item in row {
+                write!(f, " {} ", item)?;
+            }
+            writeln!(f, "]")?;
+        }
+        
         Ok(())
     }
 }
@@ -47,10 +66,28 @@ impl<Type: Clone> Matrix<Type> {
     }
     
     pub fn get_data_row(&self, row: usize) -> Vec<Type> {
+        if row >= self.row {
+            panic!("Row index out of bounds!");
+        }
+        
         self.data[row].clone()
     }
     
     pub fn get_data_item(&self, row: usize, col: usize) -> Type {
+        if row >= self.row {
+            panic!("Row index out of bounds!");
+        } else if col >= self.col {
+            panic!("Column index out of bounds!");
+        }
+        
         self.data[row][col].clone()
+    }
+    
+    pub fn is_square(&self) -> bool {
+        self.row == self.col
+    }
+    
+    pub fn is_vector(&self) -> bool {
+        self.col == 1
     }
 }

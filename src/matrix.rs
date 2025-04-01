@@ -122,3 +122,13 @@ impl<Type: Clone + std::ops::Add<Output = Type>> Matrix<Type> {
         result
     }
 }
+
+impl<Type> Matrix<Type> {
+    pub fn get_row(&self) -> usize {
+        self.row
+    }
+    
+    pub fn get_col(&self) -> usize {
+        self.col
+    }
+}
